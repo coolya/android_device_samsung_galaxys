@@ -48,8 +48,8 @@ PRODUCT_COPY_FILES := \
 
 # Init files
 PRODUCT_COPY_FILES += \
-	device/samsung/galaxys/init.herring.rc:root/init.galaxys.rc \
-	device/samsung/galaxys/ueventd.herring.rc:root/ueventd.galaxys.rc
+	device/samsung/galaxys/init.galaxys.rc:root/init.galaxys.rc \
+	device/samsung/galaxys/ueventd.galaxys.rc:root/ueventd.galaxys.rc
 
 # Prebuilt kl keymaps
 PRODUCT_COPY_FILES += \
