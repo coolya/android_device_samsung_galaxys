@@ -15,6 +15,7 @@
 
 LOCAL_PATH := $(call my-dir)
 
+ifeq ($(TARGET_DEVICE),galaxys)
 ifneq ($(TARGET_SIMULATOR),true)
 
 # HAL module implemenation, not prelinked, and stored in
@@ -43,3 +44,4 @@ LOCAL_PRELINK_MODULE := false
 include $(BUILD_SHARED_LIBRARY)
 
 endif # !TARGET_SIMULATOR
+endif
