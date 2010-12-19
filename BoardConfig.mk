@@ -64,7 +64,7 @@ BOARD_KERNEL_BASE := 0x30000000
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_CMDLINE := console=ttyFIQ0 no_console_suspend
 
-TARGET_RECOVERY_UI_LIB := librecovery_ui_galaxys
+#TARGET_RECOVERY_UI_LIB := librecovery_ui_galaxys
 TARGET_RELEASETOOLS_EXTENSIONS := device/samsung/galaxys
 
 TARGET_USERIMAGES_USE_EXT4 := true
