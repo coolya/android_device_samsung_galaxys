@@ -580,10 +580,14 @@ static int set_init_properties_action(int nargs, char **args)
     if (qemu[0])
         import_kernel_cmdline(1);
 
-    if (!strcmp(bootmode,"factory"))
+    if (!strcmp(bootmode,"1"))
         property_set("ro.factorytest", "1");
-    else if (!strcmp(bootmode,"factory2"))
+    else if (!strcmp(bootmode,"2"))
         property_set("ro.factorytest", "2");
+    else if (!strcmp(bootmode,"3"))
+        property_set("ro.factorytest", "3");
+    else if (!strcmp(bootmode,"4"))
+        property_set("ro.factorytest", "4");
     else
         property_set("ro.factorytest", "0");
 
@@ -691,7 +695,16 @@ int main(int argc, char **argv)
     log_init();
     
     INFO("reading config file\n");
-    init_parse_config_file("/init.rc");
+    if (!strcmp(bootmode, "1"))
+        init_parse_config_file("/factorytest.rc");
+    else if (!strcmp(bootmode, "2"))
+        init_parse_config_file("/recovery.rc");
+    else if (!strcmp(bootmode, "3"))
+        init_parse_config_file("/fota.rc");
+    else if (!strcmp(bootmode, "4"))
+        init_parse_config_file("/lpm.rc");
+    else
+        init_parse_config_file("/init.rc");
 
     /* pull the kernel commandline and ramdisk properties file in */
     import_kernel_cmdline(0);
