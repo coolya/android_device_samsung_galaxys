@@ -32,4 +32,6 @@ PRODUCT_LOCALES += hdpi
 # Discard inherited values and use our own instead.
 PRODUCT_NAME := full_galaxys
 PRODUCT_DEVICE := galaxys
-PRODUCT_MODEL := Full Android on Galaxy S
+PRODUCT_BRAND := Samsung
+PRODUCT_MANUFACTURER := Samsung
+PRODUCT_MODEL := GT-I9000
