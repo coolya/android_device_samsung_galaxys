@@ -83,6 +83,5 @@ WIFI_DRIVER_MODULE_NAME     :=  "bcm4329"
 WIFI_DRIVER_MODULE_ARG      :=  "firmware_path=/vendor/firmware/fw_bcm4329.bin nvram_path=/vendor/firmware/nvram_net.txt"
 
 BOARD_HAS_NO_SELECT_BUTTON := true
-BOARD_HAS_NO_MISC_PARTITION := true
 BOARD_HAS_NO_RECOVERY_PARTITION := true
-
+BOARD_HAS_JANKY_BACKBUFFER := true
