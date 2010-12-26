@@ -384,8 +384,11 @@ static int fimc_v4l2_enum_fmt(int fp, unsigned int fmt)
     fmtdesc.index = 0;
 
     while (ioctl(fp, VIDIOC_ENUM_FMT, &fmtdesc) == 0) {
+    
+        LOGD("found fmt = %#x found pixel format[%d]: %s\n", fmt, fmtdesc.index, fmtdesc.description);
+        
         if (fmtdesc.pixelformat == fmt) {
-            LOGV("passed fmt = %#x found pixel format[%d]: %s\n", fmt, fmtdesc.index, fmtdesc.description);
+            LOGD("passed fmt = %#x found pixel format[%d]: %s\n", fmt, fmtdesc.index, fmtdesc.description);
             found = 1;
             break;
         }
@@ -1318,28 +1321,28 @@ int SecCamera::getRecord()
 
 int SecCamera::setPreviewSize(int width, int height, int pixel_format)
 {
-    LOGV("%s(width(%d), height(%d), format(%d))", __func__, width, height, pixel_format);
+    LOGD("%s(width(%d), height(%d), format(%d))", __func__, width, height, pixel_format);
 
     int v4lpixelformat = pixel_format;
 
-#if defined(LOG_NDEBUG) && LOG_NDEBUG == 0
+
     if (v4lpixelformat == V4L2_PIX_FMT_YUV420)
-        LOGV("PreviewFormat:V4L2_PIX_FMT_YUV420");
+        LOGD("PreviewFormat:V4L2_PIX_FMT_YUV420");
     else if (v4lpixelformat == V4L2_PIX_FMT_NV12)
-        LOGV("PreviewFormat:V4L2_PIX_FMT_NV12");
+        LOGD("PreviewFormat:V4L2_PIX_FMT_NV12");
     else if (v4lpixelformat == V4L2_PIX_FMT_NV12T)
-        LOGV("PreviewFormat:V4L2_PIX_FMT_NV12T");
+        LOGD("PreviewFormat:V4L2_PIX_FMT_NV12T");
     else if (v4lpixelformat == V4L2_PIX_FMT_NV21)
-        LOGV("PreviewFormat:V4L2_PIX_FMT_NV21");
+        LOGD("PreviewFormat:V4L2_PIX_FMT_NV21");
     else if (v4lpixelformat == V4L2_PIX_FMT_YUV422P)
-        LOGV("PreviewFormat:V4L2_PIX_FMT_YUV422P");
+        LOGD("PreviewFormat:V4L2_PIX_FMT_YUV422P");
     else if (v4lpixelformat == V4L2_PIX_FMT_YUYV)
-        LOGV("PreviewFormat:V4L2_PIX_FMT_YUYV");
+        LOGD("PreviewFormat:V4L2_PIX_FMT_YUYV");
     else if (v4lpixelformat == V4L2_PIX_FMT_RGB565)
-        LOGV("PreviewFormat:V4L2_PIX_FMT_RGB565");
+        LOGD("PreviewFormat:V4L2_PIX_FMT_RGB565");
     else
-        LOGV("PreviewFormat:UnknownFormat");
-#endif
+        LOGE("PreviewFormat:UnknownFormat");
+
     m_preview_width  = width;
     m_preview_height = height;
     m_preview_v4lformat = v4lpixelformat;
