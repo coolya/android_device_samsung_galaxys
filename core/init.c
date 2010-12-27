@@ -404,7 +404,8 @@ static void import_kernel_nv(char *name, int in_qemu)
             strlcpy(qemu, value, sizeof(qemu));
         } else if (!strcmp(name,"androidboot.console")) {
             strlcpy(console, value, sizeof(console));
-        } else if (!strcmp(name,"androidboot.mode")) {
+            /* Samsung bootmode string */
+        } else if (!strcmp(name,"bootmode")) {
             strlcpy(bootmode, value, sizeof(bootmode));
         } else if (!strcmp(name,"androidboot.serialno")) {
             strlcpy(serialno, value, sizeof(serialno));
@@ -694,6 +695,9 @@ int main(int argc, char **argv)
     open_devnull_stdio();
     log_init();
     
+        /* pull the kernel commandline and ramdisk properties file in */
+    import_kernel_cmdline(0);
+
     INFO("reading config file\n");
     if (!strcmp(bootmode, "1"))
         init_parse_config_file("/factorytest.rc");
@@ -705,9 +709,6 @@ int main(int argc, char **argv)
         init_parse_config_file("/lpm.rc");
     else
         init_parse_config_file("/init.rc");
-
-    /* pull the kernel commandline and ramdisk properties file in */
-    import_kernel_cmdline(0);
 
     get_hardware_name(hardware, &revision);
     snprintf(tmp, sizeof(tmp), "/init.%s.rc", hardware);
