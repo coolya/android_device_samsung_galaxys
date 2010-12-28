@@ -52,6 +52,7 @@ PRODUCT_COPY_FILES += \
 	device/samsung/galaxys/initramfs/init.aries.rc:root/init.aries.rc \
 	device/samsung/galaxys/initramfs/ueventd.aries.rc:root/ueventd.aries.rc \
         device/samsung/galaxys/initramfs/recovery.rc:root/recovery.rc
+        device/samsung/galaxys/initramfs/etc/recovery.fstab:recovery/root/etc/recovery.fstab
 
 # Bootanimation
 PRODUCT_COPY_FILES += \
