@@ -35,7 +35,6 @@
 # but not to the original vendor tree. Be sure to update both.
 
 
-
 # These is the hardware-specific overlay, which points to the location
 # of hardware-specific resource overrides, typically the frameworks and
 # application settings that are stored in resourced.
@@ -73,13 +72,10 @@ PRODUCT_PACKAGES += \
 	make_ext4fs \
 	setup_fs
 
-PRODUCT_CHARACTERISTICS := nosdcard
-
 # These are the OpenMAX IL configuration files
 PRODUCT_COPY_FILES += \
 	device/samsung/galaxys/sec_mm/sec_omx/sec_omx_core/secomxregistry:system/etc/secomxregistry \
 	device/samsung/galaxys/media_profiles.xml:system/etc/media_profiles.xml
-
 
 # These are the OpenMAX IL modules
 PRODUCT_PACKAGES += \
@@ -93,8 +89,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	lights.s5pc110 \
 	overlay.s5pc110 \
-	sensors.herring
-
+	sensors.aries
 # Libs
 PRODUCT_PACKAGES += \
 	libcamera \
