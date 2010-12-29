@@ -133,6 +133,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
        wifi.supplicant_scan_interval=15 \
        dalvik.vm.heapsize=32m
 
+# enable Google-specific location features,
+# like NetworkLocationProvider and LocationCollector
+PRODUCT_PROPERTY_OVERRIDES += \
+        ro.com.google.locationfeatures=1
+
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
 
