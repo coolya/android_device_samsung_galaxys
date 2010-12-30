@@ -537,8 +537,8 @@ static overlay_t* overlay_createOverlay(struct overlay_control_device_t *dev,
     phyAddr = 0;
 
     if (format == OVERLAY_FORMAT_DEFAULT) {
-        LOGV("format == OVERLAY_FORMAT_DEFAULT\n");
-        LOGV("set to HAL_PIXEL_FORMAT_CUSTOM_YCrCb_420_SP\n");
+        LOGD("format == OVERLAY_FORMAT_DEFAULT\n");
+        LOGD("set to HAL_PIXEL_FORMAT_CUSTOM_YCrCb_420_SP\n");
         format = HAL_PIXEL_FORMAT_CUSTOM_YCrCb_420_SP;
     }
 
@@ -886,11 +886,11 @@ static int overlay_commit(struct overlay_control_device_t *dev,
         goto end;
     }
 
-    LOGV("Position/X%d/Y%d/W%d/H%d\n", data->posX, data->posY, data->posW,
+    LOGD("Position/X%d/Y%d/W%d/H%d\n", data->posX, data->posY, data->posW,
             data->posH);
-    LOGV("Adjusted Position/X%d/Y%d/W%d/H%d\n", stage->posX, stage->posY,
+    LOGD("Adjusted Position/X%d/Y%d/W%d/H%d\n", stage->posX, stage->posY,
             stage->posW, stage->posH);
-    LOGV("Rotation/%d\n", stage->rotation );
+    LOGD("Rotation/%d\n", stage->rotation );
 
     if ((ret = disable_streaming_locked(shared, fd)))
         goto end;
@@ -1265,7 +1265,7 @@ static int overlay_setCrop(struct overlay_data_device_t *dev, uint32_t x,
     ctx->data.cropW = w;
     ctx->data.cropH = h;
 
-    LOGV("Crop Win/X%d/Y%d/W%d/H%d\n", x, y, w, h );
+    LOGD("Crop Win/X%d/Y%d/W%d/H%d\n", x, y, w, h );
 
     if ((rc = disable_streaming_locked(ctx->shared, ctx->ctl_fd)))
         goto end;
