@@ -71,8 +71,8 @@ static const struct sensor_t sSensorList[] = {
           "STMicroelectronics",
           1, SENSORS_ACCELERATION_HANDLE,
           SENSOR_TYPE_ACCELEROMETER, RANGE_A, RESOLUTION_A, 0.23f, 20000, { } },
-        { "AK8973 3-axis Magnetic field sensor",
-          "Asahi Kasei Microdevices",
+        { "MS3C 3-axis Magnetic field sensor",
+          "Yamaha ",
           1, SENSORS_MAGNETIC_FIELD_HANDLE,
           SENSOR_TYPE_MAGNETIC_FIELD, 2000.0f, CONVERT_M, 6.8f, 30000, { } },
         { "AK8973 Orientation sensor",
@@ -137,6 +137,7 @@ private:
         proximity       = 1,
         akm             = 2,
         gyro            = 3,
+        //yamaha          = 4,
         numSensorDrivers,
         numFds,
     };
@@ -149,8 +150,9 @@ private:
 
     int handleToDriver(int handle) const {
         switch (handle) {
-            case ID_A:
             case ID_M:
+                //return yamaha;
+            case ID_A:
             case ID_O:
                 return akm;
             case ID_P:
@@ -187,6 +189,11 @@ sensors_poll_context_t::sensors_poll_context_t()
     mPollFds[gyro].fd = mSensors[gyro]->getFd();
     mPollFds[gyro].events = POLLIN;
     mPollFds[gyro].revents = 0;
+   /*
+    mSensors[yamaha] = new CompassSensor();
+    mPollFds[yamaha].fd = mSensors[yamaha]->getFd();
+    mPollFds[yamaha].events = POLLIN;
+    mPollFds[yamaha].revents = 0;*/
 
     int wakeFds[2];
     int result = pipe(wakeFds);
