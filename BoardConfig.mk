@@ -22,8 +22,6 @@ BOARD_USES_GENERIC_AUDIO := false
 
 BOARD_USES_LIBSECRIL_STUB := true
 
-BOARD_NO_PAGE_FLIPPING := true
-
 # Use the non-open-source parts, if they're present
 -include vendor/samsung/galaxys/BoardConfigVendor.mk
 
@@ -42,8 +40,6 @@ TARGET_PROVIDES_INIT_TARGET_RC := true
 TARGET_BOARD_PLATFORM := s5pc110
 TARGET_BOOTLOADER_BOARD_NAME := aries
 
-TARGET_SEC_INTERNAL_STORAGE := false
-
 # Enable NEON feature
 TARGET_ARCH_VARIANT := armv7-a-neon
 ARCH_ARM_HAVE_TLS_REGISTER := true
@@ -53,10 +49,7 @@ ifeq ($(USE_CAMERA_STUB),false)
 BOARD_CAMERA_LIBRARIES := libcamera
 endif
 
-BOARD_USES_HGL := true
 BOARD_USES_OVERLAY := true
-
-DEFAULT_FB_NUM := 2
 
 BOARD_NAND_PAGE_SIZE := 4096 -s 128
 
