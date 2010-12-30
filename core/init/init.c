@@ -707,12 +707,12 @@ int main(int argc, char **argv)
         init_parse_config_file("/fota.rc");
     else if (!strcmp(bootmode, "4"))
         init_parse_config_file("/lpm.rc");
-    else
+    else {
         init_parse_config_file("/init.rc");
-
-    get_hardware_name(hardware, &revision);
-    snprintf(tmp, sizeof(tmp), "/init.%s.rc", hardware);
-    init_parse_config_file(tmp);
+        get_hardware_name(hardware, &revision);
+        snprintf(tmp, sizeof(tmp), "/init.%s.rc", hardware);
+        init_parse_config_file(tmp);
+    }
 
     action_for_each_trigger("early-init", action_add_queue_tail);
 
