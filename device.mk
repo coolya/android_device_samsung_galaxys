@@ -52,10 +52,6 @@ PRODUCT_COPY_FILES += \
 	device/samsung/galaxys/initramfs/ueventd.aries.rc:root/ueventd.aries.rc \
         device/samsung/galaxys/initramfs/recovery.rc:root/recovery.rc
 
-# Bootanimation
-PRODUCT_COPY_FILES += \
-        device/samsung/galaxys/bootanimation.zip:system/media/bootanimation.zip
-
 # Prebuilt kl keymaps
 PRODUCT_COPY_FILES += \
 	device/samsung/galaxys/s3c-keypad.kl:system/usr/keylayout/s3c-keypad.kl \
