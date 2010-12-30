@@ -59,6 +59,7 @@ PRODUCT_COPY_FILES += \
 
 # Generated kcm keymaps
 PRODUCT_PACKAGES := \
+        s3c-keypad.kcm \
         aries-keypad.kcm \
 	cypress-touchkey.kcm
 
