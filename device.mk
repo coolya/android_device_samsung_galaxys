@@ -47,10 +47,10 @@ PRODUCT_COPY_FILES := \
 
 # Init files
 PRODUCT_COPY_FILES += \
-        device/samsung/galaxys/initramfs/init.rc:root/init.rc \
-	device/samsung/galaxys/initramfs/init.aries.rc:root/init.aries.rc \
-	device/samsung/galaxys/initramfs/ueventd.aries.rc:root/ueventd.aries.rc \
-        device/samsung/galaxys/initramfs/recovery.rc:root/recovery.rc
+        device/samsung/galaxys/initramfs/data/init.rc:root/init.rc \
+	device/samsung/galaxys/initramfs/data/init.aries.rc:root/init.aries.rc \
+	device/samsung/galaxys/initramfs/data/ueventd.aries.rc:root/ueventd.aries.rc \
+        device/samsung/galaxys/initramfs/data/recovery.rc:root/recovery.rc
 
 # Prebuilt kl keymaps
 PRODUCT_COPY_FILES += \
