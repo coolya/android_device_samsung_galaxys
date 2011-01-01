@@ -26,6 +26,11 @@
 #include <sys/mman.h>
 #include "v4l2_utils.h"
 
+#ifndef V4L2_DEVICE
+#define V4L2_DEVICE "/dev/video1"
+#endif
+
+
 
 #define LOG_FUNCTION_NAME    LOGV("%s: %s",  __FILE__, __func__);
 
@@ -76,7 +81,7 @@ int v4l2_overlay_get(int name)
 int v4l2_overlay_open(int id)
 {
     LOG_FUNCTION_NAME
-    return open("/dev/video1", O_RDWR);
+    return open(V4L2_DEVICE, O_RDWR);
 }
 
 int v4l2_overlay_init_fimc(int fd, s5p_fimc_t *s5p_fimc)

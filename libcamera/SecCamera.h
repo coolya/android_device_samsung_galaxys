@@ -159,10 +159,14 @@ namespace android {
 #define DEFAULT_JPEG_THUMBNAIL_WIDTH        256
 #define DEFAULT_JPEG_THUMBNAIL_HEIGHT       192
 
+#ifndef CAMERA_DEV_NAME
 #define CAMERA_DEV_NAME   "/dev/video0"
+#endif
 
 #ifdef DUAL_PORT_RECORDING
+#ifndef CAMERA_DEV_NAME2
 #define CAMERA_DEV_NAME2  "/dev/video2"
+#endif
 #endif
 #define CAMERA_DEV_NAME_TEMP "/data/videotmp_000"
 #define CAMERA_DEV_NAME2_TEMP "/data/videotemp_002"
