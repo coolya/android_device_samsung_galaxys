@@ -75,6 +75,7 @@ WIFI_DRIVER_MODULE_ARG      :=  "firmware_path=/vendor/firmware/fw_bcm4329.bin n
 
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_HAS_NO_RECOVERY_PARTITION := true
+BOARD_HAS_SDCARD_INTERNAL := true
 
 # Recovery
 BOARD_HAS_MTD_CACHE := true
