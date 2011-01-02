@@ -126,7 +126,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # enable Google-specific location features,
 # like NetworkLocationProvider and LocationCollector
 PRODUCT_PROPERTY_OVERRIDES += \
-        ro.com.google.locationfeatures=1
+        ro.com.google.locationfeatures=1 \
+        ro.com.google.networklocation=1
 
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
