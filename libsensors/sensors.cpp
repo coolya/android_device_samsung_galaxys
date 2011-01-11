@@ -36,7 +36,7 @@
 #include "LightSensor.h"
 #include "ProximitySensor.h"
 #include "AkmSensor.h"
-#include "GyroSensor.h"
+#include "Smb380Sensor.h"
 
 /*****************************************************************************/
 
@@ -67,18 +67,15 @@
 
 /* The SENSORS Module */
 static const struct sensor_t sSensorList[] = {
-        { "KR3DM 3-axis Accelerometer",
-          "STMicroelectronics",
+/*
+        { "SMB380 3-axis Accelerometer",
+          "Bosch Sensortec",
           1, SENSORS_ACCELERATION_HANDLE,
-          SENSOR_TYPE_ACCELEROMETER, RANGE_A, RESOLUTION_A, 0.23f, 20000, { } },
+          SENSOR_TYPE_ACCELEROMETER, RANGE_A, RESOLUTION_A, 0.20f, 40000, { } },*/
         { "MS3C 3-axis Magnetic field sensor",
           "Yamaha ",
           1, SENSORS_MAGNETIC_FIELD_HANDLE,
           SENSOR_TYPE_MAGNETIC_FIELD, 2000.0f, CONVERT_M, 6.8f, 30000, { } },
-        { "AK8973 Orientation sensor",
-          "Asahi Kasei Microdevices",
-          1, SENSORS_ORIENTATION_HANDLE,
-          SENSOR_TYPE_ORIENTATION, 360.0f, CONVERT_O, 7.8f, 30000, { } },
         { "GP2A Light sensor",
           "Sharp",
           1, SENSORS_LIGHT_HANDLE,
@@ -86,11 +83,7 @@ static const struct sensor_t sSensorList[] = {
         { "GP2A Proximity sensor",
           "Sharp",
           1, SENSORS_PROXIMITY_HANDLE,
-          SENSOR_TYPE_PROXIMITY, 5.0f, 5.0f, 0.75f, 0, { } },
-        { "K3G Gyroscope sensor",
-          "STMicroelectronics",
-          1, SENSORS_GYROSCOPE_HANDLE,
-          SENSOR_TYPE_GYROSCOPE, RANGE_GYRO, CONVERT_GYRO, 6.1f, 1200, { } },
+          SENSOR_TYPE_PROXIMITY, 5.0f, 5.0f, 0.75f, 0, { } },        
 };
 
 
@@ -135,8 +128,8 @@ private:
     enum {
         light           = 0,
         proximity       = 1,
-        akm             = 2,
-        gyro            = 3,
+        //akm             = 2,
+        //accel           = 2,
         //yamaha          = 4,
         numSensorDrivers,
         numFds,
@@ -150,17 +143,13 @@ private:
 
     int handleToDriver(int handle) const {
         switch (handle) {
-            case ID_M:
-                //return yamaha;
-            case ID_A:
-            case ID_O:
-                return akm;
+           
+           /* case ID_A:
+                return accel;*/
             case ID_P:
                 return proximity;
             case ID_L:
                 return light;
-            case ID_GY:
-                return gyro;
         }
         return -EINVAL;
     }
@@ -179,16 +168,17 @@ sensors_poll_context_t::sensors_poll_context_t()
     mPollFds[proximity].fd = mSensors[proximity]->getFd();
     mPollFds[proximity].events = POLLIN;
     mPollFds[proximity].revents = 0;
-
+/*
     mSensors[akm] = new AkmSensor();
     mPollFds[akm].fd = mSensors[akm]->getFd();
     mPollFds[akm].events = POLLIN;
     mPollFds[akm].revents = 0;
 
-    mSensors[gyro] = new GyroSensor();
-    mPollFds[gyro].fd = mSensors[gyro]->getFd();
-    mPollFds[gyro].events = POLLIN;
-    mPollFds[gyro].revents = 0;
+
+    mSensors[accel] = new Smb380Sensor();
+    mPollFds[accel].fd = mSensors[accel]->getFd();
+    mPollFds[accel].events = POLLIN;
+    mPollFds[accel].revents = 0;*/
    /*
     mSensors[yamaha] = new CompassSensor();
     mPollFds[yamaha].fd = mSensors[yamaha]->getFd();

@@ -82,7 +82,7 @@ __BEGIN_DECLS
 
 // conversion of acceleration data to SI units (m/s^2)
 #define RANGE_A                     (2*GRAVITY_EARTH)
-#define RESOLUTION_A                (RANGE_A/(256*NUMOFACCDATA))
+#define RESOLUTION_A                (RANGE_A/(512))
 #define CONVERT_A                   (GRAVITY_EARTH / LSG / NUMOFACCDATA)
 #define CONVERT_A_X                 (CONVERT_A)
 #define CONVERT_A_Y                 (-CONVERT_A)
