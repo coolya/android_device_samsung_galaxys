@@ -67,11 +67,11 @@
 
 /* The SENSORS Module */
 static const struct sensor_t sSensorList[] = {
-/*
+
         { "SMB380 3-axis Accelerometer",
           "Bosch Sensortec",
           1, SENSORS_ACCELERATION_HANDLE,
-          SENSOR_TYPE_ACCELEROMETER, RANGE_A, RESOLUTION_A, 0.20f, 40000, { } },*/
+          SENSOR_TYPE_ACCELEROMETER, RANGE_A, RESOLUTION_A, 0.20f, 40000, { } },
         { "MS3C 3-axis Magnetic field sensor",
           "Yamaha ",
           1, SENSORS_MAGNETIC_FIELD_HANDLE,
@@ -129,7 +129,7 @@ private:
         light           = 0,
         proximity       = 1,
         //akm             = 2,
-        //accel           = 2,
+        accel           = 2,
         //yamaha          = 4,
         numSensorDrivers,
         numFds,
@@ -144,8 +144,8 @@ private:
     int handleToDriver(int handle) const {
         switch (handle) {
            
-           /* case ID_A:
-                return accel;*/
+            case ID_A:
+                return accel;
             case ID_P:
                 return proximity;
             case ID_L:
@@ -172,13 +172,13 @@ sensors_poll_context_t::sensors_poll_context_t()
     mSensors[akm] = new AkmSensor();
     mPollFds[akm].fd = mSensors[akm]->getFd();
     mPollFds[akm].events = POLLIN;
-    mPollFds[akm].revents = 0;
+    mPollFds[akm].revents = 0;*/
 
 
     mSensors[accel] = new Smb380Sensor();
     mPollFds[accel].fd = mSensors[accel]->getFd();
     mPollFds[accel].events = POLLIN;
-    mPollFds[accel].revents = 0;*/
+    mPollFds[accel].revents = 0;
    /*
     mSensors[yamaha] = new CompassSensor();
     mPollFds[yamaha].fd = mSensors[yamaha]->getFd();

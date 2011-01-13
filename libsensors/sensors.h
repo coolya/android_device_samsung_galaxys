@@ -54,9 +54,9 @@ __BEGIN_DECLS
 
 #define AKM_DEVICE_NAME     "/dev/akm8973_aot"
 
-#define EVENT_TYPE_ACCEL_X          REL_Y
-#define EVENT_TYPE_ACCEL_Y          REL_X
-#define EVENT_TYPE_ACCEL_Z          REL_Z
+#define EVENT_TYPE_ACCEL_X          ABS_X
+#define EVENT_TYPE_ACCEL_Y          ABS_Y
+#define EVENT_TYPE_ACCEL_Z          ABS_Z
 
 #define EVENT_TYPE_YAW              REL_RX
 #define EVENT_TYPE_PITCH            REL_RY
@@ -83,10 +83,10 @@ __BEGIN_DECLS
 // conversion of acceleration data to SI units (m/s^2)
 #define RANGE_A                     (2*GRAVITY_EARTH)
 #define RESOLUTION_A                (RANGE_A/(512))
-#define CONVERT_A                   (GRAVITY_EARTH / LSG / NUMOFACCDATA)
+#define CONVERT_A                   (RANGE_A/(512))
 #define CONVERT_A_X                 (CONVERT_A)
-#define CONVERT_A_Y                 (-CONVERT_A)
-#define CONVERT_A_Z                 (-CONVERT_A)
+#define CONVERT_A_Y                 (CONVERT_A)
+#define CONVERT_A_Z                 (CONVERT_A)
 
 // conversion of magnetic data to uT units
 #define CONVERT_M                   (1.0f/16.0f)

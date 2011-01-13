@@ -48,6 +48,7 @@ struct input_event;
 
 class Smb380Sensor : public SensorBase {
     int mEnabled;
+    InputEventCircularReader mInputReader;
     sensors_event_t mPendingEvent;
     bool mHasPendingEvent;
     char input_sysfs_path[PATH_MAX];
