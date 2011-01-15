@@ -17,6 +17,8 @@
 # Product-specific compile-time definitions.
 #
 
+CYANOGEN_NIGHTLY := true
+
 # Set this up here so that BoardVendorConfig.mk can override it
 BOARD_USES_GENERIC_AUDIO := false
 
