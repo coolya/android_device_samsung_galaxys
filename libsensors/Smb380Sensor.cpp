@@ -29,7 +29,7 @@
 
 /*****************************************************************************/
 Smb380Sensor::Smb380Sensor()
-    : SensorBase(NULL, "SMB380 Sensor"),
+    : SensorBase(NULL, "SMB380-Sensor"),
       mEnabled(0),
 
       mInputReader(4),
@@ -121,6 +121,9 @@ int Smb380Sensor::enable(int32_t, int en) {
 
 
 bool Smb380Sensor::hasPendingEvents() const {
+    /* FIXME probably here should be returning mEnabled but instead
+	mHasPendingEvents. It does not work, so we cheat.*/
+    //LOGD("Smb380Sensor::~hasPendingEvents %d", mHasPendingEvent ? 1 : 0 );
     return mHasPendingEvent;
 }
 
@@ -138,7 +141,7 @@ int Smb380Sensor::setDelay(int32_t handle, int64_t ns)
 
 int Smb380Sensor::readEvents(sensors_event_t* data, int count)
 {
-    LOGD("Smb380Sensor::~readEvents() %d", count);
+    //LOGD("Smb380Sensor::~readEvents() %d", count);
     if (count < 1)
         return -EINVAL;
         
@@ -181,7 +184,7 @@ int Smb380Sensor::readEvents(sensors_event_t* data, int count)
         mInputReader.next();
     }
  
-	LOGD("Smb380Sensor::~readEvents() numEventReceived = %d", numEventReceived);
+	//LOGD("Smb380Sensor::~readEvents() numEventReceived = %d", numEventReceived);
 	return numEventReceived++;
 		
 }
