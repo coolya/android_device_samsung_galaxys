@@ -130,7 +130,7 @@ private:
         proximity       = 1,
         //akm             = 2,
         accel           = 2,
-        //yamaha          = 4,
+        //yamaha          = 3,
         numSensorDrivers,
         numFds,
     };
@@ -150,6 +150,10 @@ private:
                 return proximity;
             case ID_L:
                 return light;
+             /*   
+            case ID_M  
+                return yamaha;   
+                */ 
         }
         return -EINVAL;
     }
@@ -168,17 +172,12 @@ sensors_poll_context_t::sensors_poll_context_t()
     mPollFds[proximity].fd = mSensors[proximity]->getFd();
     mPollFds[proximity].events = POLLIN;
     mPollFds[proximity].revents = 0;
-/*
-    mSensors[akm] = new AkmSensor();
-    mPollFds[akm].fd = mSensors[akm]->getFd();
-    mPollFds[akm].events = POLLIN;
-    mPollFds[akm].revents = 0;*/
-
 
     mSensors[accel] = new Smb380Sensor();
     mPollFds[accel].fd = mSensors[accel]->getFd();
     mPollFds[accel].events = POLLIN;
     mPollFds[accel].revents = 0;
+
    /*
     mSensors[yamaha] = new CompassSensor();
     mPollFds[yamaha].fd = mSensors[yamaha]->getFd();
