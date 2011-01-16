@@ -36,6 +36,7 @@ LOCAL_SRC_FILES := 						\
 				ProximitySensor.cpp		\
 				AkmSensor.cpp                   \
 				Smb380Sensor.cpp                \
+				CompassSensor.cpp		\
                                 InputEventReader.cpp
 
 LOCAL_SHARED_LIBRARIES := liblog libcutils libdl

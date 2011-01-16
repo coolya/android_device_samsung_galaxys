@@ -31,7 +31,6 @@
 CompassSensor::CompassSensor()
     : SensorBase(NULL, "geomagneticd"),
       mEnabled(0),
-
       mInputReader(4),
       mHasPendingEvent(false)
 {
@@ -39,7 +38,7 @@ CompassSensor::CompassSensor()
     mPendingEvent.version = sizeof(sensors_event_t);
     mPendingEvent.sensor = ID_M;
     mPendingEvent.type = SENSOR_TYPE_MAGNETIC_FIELD;
-    mPendingEvents[MagneticField].magnetic.status = SENSOR_STATUS_ACCURACY_HIGH;
+    mPendingEvent.magnetic.status = SENSOR_STATUS_ACCURACY_HIGH;
     
     
     memset(mPendingEvent.data, 0, sizeof(mPendingEvent.data));
