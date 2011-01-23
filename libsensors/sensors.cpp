@@ -35,7 +35,7 @@
 
 #include "LightSensor.h"
 #include "ProximitySensor.h"
-
+#include "CompassSensor.h"
 #include "Smb380Sensor.h"
 
 /*****************************************************************************/
@@ -130,7 +130,7 @@ private:
         proximity       = 1,
         //akm             = 2,
         accel           = 2,
-        //yamaha          = 3,
+        yamaha          = 3,
         numSensorDrivers,
         numFds,
     };
@@ -149,11 +149,10 @@ private:
             case ID_P:
                 return proximity;
             case ID_L:
-                return light;
-             /*   
-            case ID_M  
+                return light;               
+            case ID_M:
                 return yamaha;   
-                */ 
+                 
         }
         return -EINVAL;
     }
@@ -178,11 +177,11 @@ sensors_poll_context_t::sensors_poll_context_t()
     mPollFds[accel].events = POLLIN;
     mPollFds[accel].revents = 0;
 
-   /*
+   
     mSensors[yamaha] = new CompassSensor();
     mPollFds[yamaha].fd = mSensors[yamaha]->getFd();
     mPollFds[yamaha].events = POLLIN;
-    mPollFds[yamaha].revents = 0;*/
+    mPollFds[yamaha].revents = 0;
 
     int wakeFds[2];
     int result = pipe(wakeFds);
