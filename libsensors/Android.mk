@@ -34,7 +34,6 @@ LOCAL_SRC_FILES := 						\
 				SensorBase.cpp			\
 				LightSensor.cpp			\
 				ProximitySensor.cpp		\
-				AkmSensor.cpp                   \
 				Smb380Sensor.cpp                \
 				CompassSensor.cpp		\
                                 InputEventReader.cpp

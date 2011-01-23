@@ -26,7 +26,7 @@
 #include <stdlib.h>
 
 #include <linux/input.h>
-#include <linux/akm8973.h>
+
 
 #include <utils/Atomic.h>
 #include <utils/Log.h>
@@ -35,7 +35,7 @@
 
 #include "LightSensor.h"
 #include "ProximitySensor.h"
-#include "AkmSensor.h"
+
 #include "Smb380Sensor.h"
 
 /*****************************************************************************/
