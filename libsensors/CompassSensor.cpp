@@ -29,7 +29,7 @@
 
 /*****************************************************************************/
 CompassSensor::CompassSensor()
-    : SensorBase(NULL, "geomagneticd"),
+    : SensorBase(NULL, "yas529"),
       mEnabled(0),
       mInputReader(4),
       mHasPendingEvent(false)
@@ -75,11 +75,11 @@ int CompassSensor::setInitialState() {
         !ioctl(data_fd, EVIOCGABS(EVENT_TYPE_MAGV_Y), &absinfo_y) &&
         !ioctl(data_fd, EVIOCGABS(EVENT_TYPE_MAGV_Z), &absinfo_z)) {
         value = absinfo_x.value;
-        mPendingEvent.magnetic.x = value * CONVERT_A_X;
+        mPendingEvent.magnetic.x = value * CONVERT_M_X;
         value = absinfo_y.value;
-        mPendingEvent.magnetic.y = value * CONVERT_A_Y;
+        mPendingEvent.magnetic.y = value * CONVERT_M_Y;
         value = absinfo_z.value;
-        mPendingEvent.magnetic.z = value * CONVERT_A_Z;
+        mPendingEvent.magnetic.z = value * CONVERT_M_Z;
         mHasPendingEvent = true;
     }
     else
@@ -166,11 +166,11 @@ int CompassSensor::readEvents(sensors_event_t* data, int count)
         if (type == EV_ABS) {
             float value = event->value;
             if (event->code == EVENT_TYPE_MAGV_X) {
-                mPendingEvent.magnetic.x = value * CONVERT_A_X;
+                mPendingEvent.magnetic.x = value * CONVERT_M_X;
             } else if (event->code == EVENT_TYPE_MAGV_Y) {
-                mPendingEvent.magnetic.y = value * CONVERT_A_Y;
+                mPendingEvent.magnetic.y = value * CONVERT_M_Y;
             } else if (event->code == EVENT_TYPE_MAGV_Z) {
-                mPendingEvent.magnetic.z = value * CONVERT_A_Z;
+                mPendingEvent.magnetic.z = value * CONVERT_M_Z;
             }
         } else if (type == EV_SYN) {
             mPendingEvent.timestamp = timevalToNano(event->time);

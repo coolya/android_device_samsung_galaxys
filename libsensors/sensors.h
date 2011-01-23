@@ -64,9 +64,9 @@ __BEGIN_DECLS
 #define EVENT_TYPE_ORIENT_STATUS    REL_WHEEL
 
 /* For AK8973iB */
-#define EVENT_TYPE_MAGV_X           REL_DIAL
-#define EVENT_TYPE_MAGV_Y           REL_HWHEEL
-#define EVENT_TYPE_MAGV_Z           REL_MISC
+#define EVENT_TYPE_MAGV_X           ABS_X
+#define EVENT_TYPE_MAGV_Y           ABS_Y
+#define EVENT_TYPE_MAGV_Z           ABS_Z
 
 #define EVENT_TYPE_PROXIMITY        ABS_DISTANCE
 #define EVENT_TYPE_LIGHT            ABS_MISC
@@ -89,10 +89,10 @@ __BEGIN_DECLS
 #define CONVERT_A_Z                 (CONVERT_A)
 
 // conversion of magnetic data to uT units
-#define CONVERT_M                   (1.0f/16.0f)
-#define CONVERT_M_X                 (-CONVERT_M)
-#define CONVERT_M_Y                 (-CONVERT_M)
-#define CONVERT_M_Z                 (-CONVERT_M)
+#define CONVERT_M                   (1.0f/20.0f)
+#define CONVERT_M_X                 (CONVERT_M)
+#define CONVERT_M_Y                 (CONVERT_M)
+#define CONVERT_M_Z                 (CONVERT_M)
 
 /* conversion of orientation data to degree units */
 #define CONVERT_O                   (1.0f/64.0f)
