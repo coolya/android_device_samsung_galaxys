@@ -68,7 +68,8 @@ BOARD_NAND_PAGE_SIZE := 4096 -s 128
 
 BOARD_KERNEL_BASE := 0x30000000
 BOARD_KERNEL_PAGESIZE := 4096
-BOARD_KERNEL_CMDLINE := console=ttyFIQ0 no_console_suspend
+#BOARD_KERNEL_CMDLINE := console=ttyFIQ0 no_console_suspend
+BOARD_KERNEL_CMDLINE := console=ttySAC2,115200 init=/linuxrc
 
 TARGET_RELEASETOOLS_EXTENSIONS := device/samsung/galaxys
 
