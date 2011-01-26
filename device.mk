@@ -52,6 +52,13 @@ PRODUCT_COPY_FILES += \
 	device/samsung/galaxys/initramfs/data/ueventd.aries.rc:root/ueventd.aries.rc \
         device/samsung/galaxys/initramfs/data/recovery.rc:root/recovery.rc
 
+# Recovery Files
+PRODUCT_COPY_FILES += \
+        device/samsung/galaxys/initramfs/data/init.rc:recovery/root/init.rc \
+	device/samsung/galaxys/initramfs/data/init.aries.rc:recovery/root/init.aries.rc \
+	device/samsung/galaxys/initramfs/data/ueventd.aries.rc:recovery/root/ueventd.aries.rc \
+        device/samsung/galaxys/initramfs/data/recovery.rc:recovery/root/recovery.rc
+
 # Prebuilt kl keymaps
 PRODUCT_COPY_FILES += \
 	device/samsung/galaxys/cypress-touchkey.kl:system/usr/keylayout/cypress-touchkey.kl \
