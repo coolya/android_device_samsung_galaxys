@@ -30,7 +30,7 @@
 /*****************************************************************************/
 CompassSensor::CompassSensor()
     : SensorBase(NULL, "yas529"),
-      mEnabled(0),
+      //mEnabled(0),
       mInputReader(4),
       mHasPendingEvent(false)
 {

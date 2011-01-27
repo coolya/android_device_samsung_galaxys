@@ -35,7 +35,9 @@ class BoschYamaha : public SensorBase {
 public:
             BoschYamaha();
     virtual ~BoschYamaha();
+	
 
+		
     enum {
         Accelerometer   = 0,
         MagneticField   = 1,
@@ -46,18 +48,33 @@ public:
     virtual int setDelay(int32_t handle, int64_t ns);
     virtual int enable(int32_t handle, int enabled);
     virtual int readEvents(sensors_event_t* data, int count);
-    void processEvent(int code, int value, bool accl);
+	virtual bool hasPendingEvents();
+	int processOrientation();
+	float calc_intensity(float x, float y, float z);
+	int get_rotation_matrix(const float *gsdata, const float *msdata, float *matrix);
+	int get_euler(const float *matrix, float *euler);
 
 private:
     const char* data_accel_name;
-    int         data_accel_fd;
+    int         data_compass_fd;
     int update_delay();
-    uint32_t mEnabled;
+    //uint32_t mEnabled;
+	int compassEnabled;
+	int accelEnabled;
+	float accelLastRead[3];
+	float compassLastRead[3];
+	int compassDataReady;
+	int accelDataReady;	
     uint32_t mPendingMask;
     InputEventCircularReader mInputReaderMagnetic;
     InputEventCircularReader mInputReaderAccel;
     sensors_event_t mPendingEvents[numSensors];
     uint64_t mDelays[numSensors];
+	char input_sysfs_path[PATH_MAX];
+    int input_sysfs_path_len;
+	char input_accel_sysfs_path[PATH_MAX];
+    int input_accel_sysfs_path_len;
+	
 };
 
 /*****************************************************************************/

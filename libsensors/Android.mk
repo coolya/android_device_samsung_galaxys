@@ -34,9 +34,8 @@ LOCAL_SRC_FILES := 						\
 				SensorBase.cpp			\
 				LightSensor.cpp			\
 				ProximitySensor.cpp		\
-				Smb380Sensor.cpp                \
-				CompassSensor.cpp		\
-                                InputEventReader.cpp
+				BoschYamaha.cpp         \
+	            InputEventReader.cpp
 
 LOCAL_SHARED_LIBRARIES := liblog libcutils libdl
 LOCAL_PRELINK_MODULE := false
