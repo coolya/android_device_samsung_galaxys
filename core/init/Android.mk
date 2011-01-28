@@ -1,8 +1,8 @@
 # Copyright 2005 The Android Open Source Project
 
-LOCAL_PATH:= $(call my-dir)
-
 ifeq ($(TARGET_DEVICE),galaxys)
+
+LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES:= \
@@ -22,6 +22,10 @@ LOCAL_SRC_FILES:= \
 ifeq ($(strip $(INIT_BOOTCHART)),true)
 LOCAL_SRC_FILES += bootchart.c
 LOCAL_CFLAGS    += -DBOOTCHART=1
+endif
+
+ifeq ($(TARGET_HAS_ANCIENT_MSMCAMERA), true)
+    LOCAL_CFLAGS += -DNO_MSM_CAMDIR
 endif
 
 LOCAL_MODULE:= init.galaxys
@@ -51,4 +55,5 @@ ALL_DEFAULT_INSTALLED_MODULES += $(SYMLINKS)
 # local module name
 ALL_MODULES.$(LOCAL_MODULE).INSTALLED := \
     $(ALL_MODULES.$(LOCAL_MODULE).INSTALLED) $(SYMLINKS)
+
 endif

@@ -405,9 +405,11 @@ static void handle_device_event(struct uevent *uevent)
         } else if (!strncmp(uevent->subsystem, "adsp", 4)) {
             base = "/dev/adsp/";
             mkdir(base, 0755);
+#ifndef NO_MSM_CAMDIR
         } else if (!strncmp(uevent->subsystem, "msm_camera", 10)) {
             base = "/dev/msm_camera/";
             mkdir(base, 0755);
+#endif
         } else if(!strncmp(uevent->subsystem, "input", 5)) {
             base = "/dev/input/";
             mkdir(base, 0755);

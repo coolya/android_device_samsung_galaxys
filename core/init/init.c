@@ -404,7 +404,7 @@ static void import_kernel_nv(char *name, int in_qemu)
             strlcpy(qemu, value, sizeof(qemu));
         } else if (!strcmp(name,"androidboot.console")) {
             strlcpy(console, value, sizeof(console));
-            /* Samsung bootmode string */
+        /* Samsung bootmode string */
         } else if (!strcmp(name,"bootmode")) {
             strlcpy(bootmode, value, sizeof(bootmode));
         } else if (!strcmp(name,"androidboot.serialno")) {
@@ -695,10 +695,10 @@ int main(int argc, char **argv)
     open_devnull_stdio();
     log_init();
     
-        /* pull the kernel commandline and ramdisk properties file in */
+    /* pull the kernel commandline and ramdisk properties file in */
     import_kernel_cmdline(0);
 
-    INFO("reading config file\n");
+   INFO("reading config file\n");
     if (!strcmp(bootmode, "1"))
         init_parse_config_file("/factorytest.rc");
     else if (!strcmp(bootmode, "2"))
