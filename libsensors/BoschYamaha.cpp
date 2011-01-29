@@ -51,7 +51,7 @@ BoschYamaha::BoschYamaha()
 
     /* FIXME set input device name for magnetic sensor */
     data_name = "input0";
-    data_compass_fd = openInput("yas529");
+    data_compass_fd = openInput("geomagnetic");
 	
 	//Open Compass
 	if (data_compass_fd) {
@@ -59,12 +59,12 @@ BoschYamaha::BoschYamaha()
         strcat(input_sysfs_path, input_name);
         strcat(input_sysfs_path, "/device/");
         input_sysfs_path_len = strlen(input_sysfs_path);
-        enable(MagneticField, 1);
+        //enable(MagneticField, 1);
 
     }
     
     /* FIXME set input device name for accelereometer sensor */
-    data_accel_name = "event5";
+    data_accel_name = "event6";
     data_fd = openInput("SMB380-Sensor");
     
 		//Open Compass
@@ -258,11 +258,11 @@ int BoschYamaha::readEvents(sensors_event_t* data, int count)
 			if (type == EV_ABS) {
 				float value = event->value;
 					if (event->code == EVENT_TYPE_MAGV_X) {
-						mPendingEvents[MagneticField].magnetic.x = value * CONVERT_M_X;
+						mPendingEvents[MagneticField].magnetic.x = (value * CONVERT_M_X);
 					} else if (event->code == EVENT_TYPE_MAGV_Y) {
-						mPendingEvents[MagneticField].magnetic.y = value * CONVERT_M_Y;
+						mPendingEvents[MagneticField].magnetic.y = (value * CONVERT_M_Y);
 					} else if (event->code == EVENT_TYPE_MAGV_Z) {
-						mPendingEvents[MagneticField].magnetic.z = value * CONVERT_M_Z;
+						mPendingEvents[MagneticField].magnetic.z = (value * CONVERT_M_Z);
 					}
 			}
 			else if (type == EV_SYN) {
