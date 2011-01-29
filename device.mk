@@ -59,13 +59,13 @@ PRODUCT_COPY_FILES += \
 
 # Prebuilt kl keymaps
 PRODUCT_COPY_FILES += \
-	device/samsung/galaxys/cypress-touchkey.kl:system/usr/keylayout/cypress-touchkey.kl \
-	device/samsung/galaxys/sec_jack.kl:system/usr/keylayout/sec_jack.kl
+	device/samsung/crespo/s3c-keypad.kl:system/usr/keylayout/s3c-keypad.kl \
+	device/samsung/crespo/cypress-touchkey.kl:system/usr/keylayout/cypress-touchkey.kl \
+	device/samsung/crespo/sec_jack.kl:system/usr/keylayout/sec_jack.kl
 
 # Generated kcm keymaps
 PRODUCT_PACKAGES := \
-        s3c-keypad.kcm \
-        aries-keypad.kcm \
+	s3c-keypad.kcm \
 	cypress-touchkey.kcm
 
 # Filesystem management tools
