@@ -49,23 +49,23 @@ PRODUCT_COPY_FILES := \
 PRODUCT_COPY_FILES += \
 	device/samsung/galaxys/init.aries.rc:root/init.aries.rc \
 	device/samsung/galaxys/ueventd.aries.rc:root/ueventd.aries.rc \
-    device/samsung/galaxys/recovery.rc:root/recovery.rc
+        device/samsung/galaxys/recovery.rc:root/recovery.rc
 
 # Recovery Files
 PRODUCT_COPY_FILES += \
 	device/samsung/galaxys/init.aries.rc:recovery/root/init.aries.rc \
 	device/samsung/galaxys/ueventd.aries.rc:recovery/root/ueventd.aries.rc \
-    device/samsung/galaxys/recovery.rc:recovery/root/recovery.rc
+        device/samsung/galaxys/recovery.rc:recovery/root/recovery.rc
 
 # Prebuilt kl keymaps
 PRODUCT_COPY_FILES += \
-	device/samsung/galaxys/s3c-keypad.kl:system/usr/keylayout/s3c-keypad.kl \
+#	device/samsung/galaxys/s3c-keypad.kl:system/usr/keylayout/s3c-keypad.kl \
 	device/samsung/galaxys/cypress-touchkey.kl:system/usr/keylayout/cypress-touchkey.kl \
 	device/samsung/galaxys/sec_jack.kl:system/usr/keylayout/sec_jack.kl
 
 # Generated kcm keymaps
 PRODUCT_PACKAGES := \
-	s3c-keypad.kcm \
+#      s3c-keypad.kcm \
 	cypress-touchkey.kcm
 
 # Filesystem management tools
