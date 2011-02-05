@@ -220,13 +220,13 @@ int BoschYamaha::update_delay()
 
 bool BoschYamaha::hasPendingEvents() {
 
-    LOGD("hasPendingEvents was called");
+    //LOGD("hasPendingEvents was called");
 	if(accelEnabled || compassEnabled){
-	    LOGD("hasPendingEvents will return true");
+	    //LOGD("hasPendingEvents will return true");
 		return true;
 	}
 	else {
-		LOGD("hasPendingEvents will return false");
+		//LOGD("hasPendingEvents will return false");
 		return false;
 	}
 }
@@ -241,11 +241,11 @@ int BoschYamaha::readEvents(sensors_event_t* data, int count)
 
 	int numEventReceived = 0;
 	
-	LOGD("Sensor: Read events was called with count: %d", count);
+	//LOGD("Sensor: Read events was called with count: %d", count);
 	
 	if(compassEnabled)
 	{
-		LOGD("Sensor: Compass is enabled, going to take care of it, count: %d", count);
+		//LOGD("Sensor: Compass is enabled, going to take care of it, count: %d", count);
 		ssize_t n = mInputReaderMagnetic.fill(data_compass_fd);
 		if (n < 0)
 			return n;
@@ -286,12 +286,12 @@ int BoschYamaha::readEvents(sensors_event_t* data, int count)
 		}
 	}
 	
-	LOGD("Sensor: Compass read quited, count: %d", count);
+	//LOGD("Sensor: Compass read quited, count: %d", count);
     
 	
 	if(accelEnabled)
 	{
-		LOGD("Sensor: Accel is enabled, going to take care of it, count: %d", count);
+		//LOGD("Sensor: Accel is enabled, going to take care of it, count: %d", count);
 		
 		ssize_t n = mInputReaderAccel.fill(data_fd);
 		//LOGD("Sensor: Accel Input Reader was filled up: %d", count);
@@ -333,10 +333,10 @@ int BoschYamaha::readEvents(sensors_event_t* data, int count)
 		}
 	}
 	
-	LOGD("Sensor: Accel read quited, count: %d, acceldata Ready: %d, compassData Ready = %d", count, accelDataReady, compassDataReady);
+	//LOGD("Sensor: Accel read quited, count: %d, acceldata Ready: %d, compassData Ready = %d", count, accelDataReady, compassDataReady);
 		
 	if( (accelDataReady == 1) && (compassDataReady == 1)){
-		LOGD("BoschYamaha: Going to Process Orientation Data");
+		//LOGD("BoschYamaha: Going to Process Orientation Data");
 		accelDataReady = 0;
 		compassDataReady = 0;
 		processOrientation();
@@ -367,9 +367,9 @@ int BoschYamaha::processOrientation(){
 	    get_euler(matrix, euler);
 	}
 	
-	LOGD("BoschYamaha: azimuth is %d", (int)(euler[0]));
-	LOGD("BoschYamaha: pitch is %d", (int)(euler[1]));
-	LOGD("BoschYamaha: roll is %d", (int)(euler[2]));
+	//LOGD("BoschYamaha: azimuth is %d", (int)(euler[0]));
+	//LOGD("BoschYamaha: pitch is %d", (int)(euler[1]));
+	//LOGD("BoschYamaha: roll is %d", (int)(euler[2]));
 
 	//Use CONVERT_O_A
     mPendingEvents[Orientation].orientation.azimuth = (int)(euler[0]);
