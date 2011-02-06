@@ -150,14 +150,17 @@ PRODUCT_LOCALES := hdpi
 PRODUCT_COPY_FILES += \
 	device/samsung/galaxys/bcm4329.ko:system/modules/bcm4329.ko
 
-ifeq ($(TARGET_PREBUILT_BOOTIMAGE),)
-LOCAL_BOOTIMAGE := device/samsung/galaxys/boot.img
+ifeq ($(TARGET_PREBUILT_ZIMAGE),)
+LOCAL_ZIMAGE := device/samsung/galaxys/zImage
 else
-LOCAL_BOOTIMAGE := $(TARGET_PREBUILT_BOOTIMAGE)
+LOCAL_ZIMAGE := $(TARGET_PREBUILT_ZIMAGE)
 endif
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_BOOTIMAGE):boot.img
+    $(LOCAL_ZIMAGE):zImage
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_ZIMAGE):kernel
 
 # See comment at the top of this file. This is where the other
 # half of the device-specific product definition file takes care
