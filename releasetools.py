@@ -17,6 +17,7 @@ import sha
 import common
 
 def FullOTA_InstallEnd(info):
+
   try:
     bootloader_img = info.input_zip.read("RADIO/bootloader.img")
   except KeyError:
