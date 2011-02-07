@@ -52,9 +52,9 @@ BOARD_CAMERA_LIBRARIES := libcamera
 endif
 
 #Video Devices
-BOARD_V4L2_DEVICE := /dev/video0
-BOARD_CAMERA_DEVICE := /dev/video2
-BOARD_SECOND_CAMERA_DEVICE := /dev/video1
+BOARD_V4L2_DEVICE := /dev/video1
+BOARD_CAMERA_DEVICE := /dev/video0
+BOARD_SECOND_CAMERA_DEVICE := /dev/video2
 
 BOARD_USES_OVERLAY := true
 
