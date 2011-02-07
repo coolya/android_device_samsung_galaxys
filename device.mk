@@ -147,8 +147,11 @@ PRODUCT_TAGS += dalvik.gc.type-precise
 # PRODUCT_LOCALES expansion must not be a density.
 PRODUCT_LOCALES := hdpi
 
+# kernel modules
 PRODUCT_COPY_FILES += \
-	device/samsung/galaxys/bcm4329.ko:system/modules/bcm4329.ko
+	device/samsung/galaxys/bcm4329.ko:system/modules/bcm4329.ko \
+	device/samsung/galaxys/cifs.ko:system/modules/cifs.ko \
+	device/samsung/galaxys/tun.ko:system/modules/tun.ko
 
 ifeq ($(TARGET_PREBUILT_ZIMAGE),)
 LOCAL_ZIMAGE := device/samsung/galaxys/zImage
