@@ -27,9 +27,10 @@ BOARD_USES_LIBSECRIL_STUB := true
 
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
-
-BOARD_HAVE_BLUETOOTH := true
-BOARD_HAVE_BLUETOOTH_BCM := true
+TARGET_ARCH_VARIANT := armv7-a-neon
+ARCH_ARM_HAVE_TLS_REGISTER := true
+TARGET_GLOBAL_CFLAGS += -mtune=cortex-a8 -mfpu=neon -mfloat-abi=softfp
+TARGET_GLOBAL_CPPFLAGS += -mtune=cortex-a8 -mfpu=neon -mfloat-abi=softfp
 
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_KERNEL := false
@@ -40,18 +41,22 @@ TARGET_PROVIDES_INIT_TARGET_RC := true
 TARGET_BOARD_PLATFORM := s5pc110
 TARGET_BOOTLOADER_BOARD_NAME := aries
 
-TARGET_USES_SAMSUNGUPDATE := true
+# Releasetools
+TARGET_PROVIDES_RELEASETOOLS := true
+TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := ./device/samsung/galaxys/releasetools/galaxys_ota_from_target_files
+TARGET_RELEASETOOL_IMG_FROM_TARGET_SCRIPT := ./device/samsung/galaxys/releasetools/galaxys_img_from_target_files
 
-# Enable NEON feature
-TARGET_ARCH_VARIANT := armv7-a-neon
-ARCH_ARM_HAVE_TLS_REGISTER := true
-
+# Camera
 USE_CAMERA_STUB := false
 ifeq ($(USE_CAMERA_STUB),false)
 BOARD_CAMERA_LIBRARIES := libcamera
 endif
 
-#Video Devices
+# Bluetooth
+BOARD_HAVE_BLUETOOTH := true
+BOARD_HAVE_BLUETOOTH_BCM := true
+
+# Video Devices
 BOARD_V4L2_DEVICE := /dev/video1
 BOARD_CAMERA_DEVICE := /dev/video0
 BOARD_SECOND_CAMERA_DEVICE := /dev/video2
@@ -67,10 +72,7 @@ BOARD_KERNEL_BASE := 0x32000000
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_CMDLINE := console=ttySAC2,115200 init=/init no_console_suspend
 
-TARGET_RELEASETOOLS_EXTENSIONS := device/samsung/galaxys
-
 BOARD_BOOTIMAGE_PARTITION_SIZE := 7864320
-BOARD_BOOTIMAGE_NO_ANDROID_MAGIC := true
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 196608000
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 1932735283
 BOARD_FLASH_BLOCK_SIZE := 4096
@@ -85,10 +87,9 @@ WIFI_DRIVER_FW_AP_PATH      := "/vendor/firmware/fw_bcm4329_apsta.bin"
 WIFI_DRIVER_MODULE_NAME     :=  "bcm4329"
 WIFI_DRIVER_MODULE_ARG      :=  "firmware_path=/vendor/firmware/fw_bcm4329.bin nvram_path=/vendor/firmware/nvram_net.txt"
 
+# Recovery
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_HAS_NO_RECOVERY_PARTITION := true
-
-# Recovery
 BOARD_HAS_MTD_CACHE := true
 BOARD_HAS_SDCARD_INTERNAL := true
 BOARD_SDCARD_DEVICE_INTERNAL := /dev/block/mmcblk0p1
