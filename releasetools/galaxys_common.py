@@ -49,6 +49,9 @@ SPECIAL_CERT_STRINGS = ("PRESIGNED", "EXTERNAL")
 class ExternalError(RuntimeError): pass
 
 
+def CopyBootFiles(input_zip, output_zip):
+    output_zip.writestr("zImage", input_zip.read("zImage"))
+
 def Run(args, **kwargs):
   """Create and return a subprocess.Popen object, printing the command
   line on the terminal if -v was specified."""
@@ -175,12 +178,7 @@ def BuildAndAddBootableImage(sourcedir, targetname, output_zip, info_dict):
 
   print "creating %s..." % (targetname,)
 
-  img = BuildBootableImage(sourcedir)
-  if img is None:
-    return None
-
-  CheckSize(img, targetname, info_dict)
-  ZipWriteStr(output_zip, targetname, img)
+  ZipWriteStr(output_zip, targetname, "zImage")
   return targetname
 
 def BuildBootableImage(sourcedir):
@@ -246,7 +244,7 @@ def AddRecovery(output_zip, info_dict):
 
 def AddBoot(output_zip, info_dict):
   BuildAndAddBootableImage(os.path.join(OPTIONS.input_tmp, "BOOT"),
-                           "boot.img", output_zip, info_dict)
+                           "zImage", output_zip, info_dict)
 
 def UnzipTemp(filename, pattern=None):
   """Unzip the given archive into a temporary directory and return the name."""

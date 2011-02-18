@@ -15,7 +15,7 @@
 import os
 import re
 
-import common
+import galaxys_common
 
 class EdifyGenerator(object):
   """Class to generate scripts in the 'edify' recovery script language
@@ -154,7 +154,7 @@ class EdifyGenerator(object):
     if fstab:
       p = fstab[mount_point]
       self.script.append('mount("%s", "%s", "%s", "%s");' %
-                         (p.fs_type, common.PARTITION_TYPES[p.fs_type],
+                         (p.fs_type, galaxys_common.PARTITION_TYPES[p.fs_type],
                           p.device, p.mount_point))
       self.mounts.add(p.mount_point)
     else:
@@ -189,7 +189,7 @@ class EdifyGenerator(object):
     if fstab:
       p = fstab[partition]
       self.script.append('format("%s", "%s", "%s");' %
-                         (p.fs_type, common.PARTITION_TYPES[p.fs_type], p.device))
+                         (p.fs_type, galaxys_common.PARTITION_TYPES[p.fs_type], p.device))
     else:
       # older target-files without per-partition types
       partition = self.info.get("partition_path", "") + partition
@@ -236,7 +236,7 @@ class EdifyGenerator(object):
     fstab = self.info["fstab"]
     if fstab:
       p = fstab[mount_point]
-      partition_type = common.PARTITION_TYPES[p.fs_type]
+      partition_type = galaxys_common.PARTITION_TYPES[p.fs_type]
       args = {'device': p.device, 'fn': fn}
       if partition_type == "MTD":
         self.script.append(
@@ -251,14 +251,14 @@ class EdifyGenerator(object):
     else:
       # backward compatibility with older target-files that lack recovery.fstab
       if self.info["partition_type"] == "MTD":
-        partition_type, partition = common.GetTypeAndDevice(mount_point, self.info)
+        partition_type, partition = galaxys_common.GetTypeAndDevice(mount_point, self.info)
         self.script.append(
             ('assert(package_extract_file("%(fn)s", "/tmp/%(partition)s.img"),\n'
              '       write_raw_image("/tmp/%(partition)s.img", "%(partition)s"),\n'
              '       delete("/tmp/%(partition)s.img"));')
             % {'partition': partition, 'fn': fn})
       elif self.info["partition_type"] == "EMMC":
-        partition_type, partition = common.GetTypeAndDevice(mount_point, self.info)
+        partition_type, partition = galaxys_common.GetTypeAndDevice(mount_point, self.info)
         self.script.append(
             ('package_extract_file("%(fn)s", "%(dir)s%(partition)s");')
             % {'partition': partition, 'fn': fn,
@@ -305,12 +305,12 @@ class EdifyGenerator(object):
 
     self.UnmountAll()
 
-    common.ZipWriteStr(output_zip, "META-INF/com/google/android/updater-script",
+    galaxys_common.ZipWriteStr(output_zip, "META-INF/com/google/android/updater-script",
                        "\n".join(self.script) + "\n")
 
     if input_path is None:
       data = input_zip.read("OTA/bin/updater")
     else:
       data = open(os.path.join(input_path, "updater")).read()
-    common.ZipWriteStr(output_zip, "META-INF/com/google/android/update-binary",
+    galaxys_common.ZipWriteStr(output_zip, "META-INF/com/google/android/update-binary",
                        data, perms=0755)
