@@ -13,7 +13,6 @@
 # limitations under the License.
 
 ifeq ($(TARGET_DEVICE),galaxys)
-ifeq ($(filter-out s5pc110,$(TARGET_BOARD_PLATFORM)),)
 
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
@@ -36,5 +35,4 @@ LOCAL_PRELINK_MODULE := false
 
 include $(BUILD_SHARED_LIBRARY)
 
-endif
 endif
