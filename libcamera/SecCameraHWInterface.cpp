@@ -1145,7 +1145,7 @@ int CameraHardwareSec::pictureThread()
 
     if (mSecCamera->getCameraId() == SecCamera::CAMERA_ID_BACK) {
         isLSISensor = !strncmp((const char*)mCameraSensorName, "S5K4ECGX", 8);
-        if(isLSISensor) {
+        if(1) { //FIXME delete death code path
             LOGI("== Camera Sensor Detect %s - Samsung LSI SOC 5M ==\n", mCameraSensorName);
             // LSI 5M SOC
             if (!SplitFrame(jpeg_data, SecCamera::getInterleaveDataSize(),
@@ -1454,19 +1454,22 @@ int CameraHardwareSec::decodeInterleaveData(unsigned char *pInterleaveData,
     int yuv_size = 0;
 
     int i = 0;
+   
+    LOGV("CameraHardwareSec::decodeInterleaveData( %d,%d, %d, %d)", interleaveDataSize,
+     yuvWidth, yuvHeight, pJpegSize);
 
     LOGV("decodeInterleaveData Start~~~");
     while (i < interleaveDataSize) {
         if ((*interleave_ptr == 0xFFFFFFFF) || (*interleave_ptr == 0x02FFFFFF) ||
                 (*interleave_ptr == 0xFF02FFFF)) {
             // Padding Data
-//            LOGE("%d(%x) padding data\n", i, *interleave_ptr);
+            LOGV("%d(%x) padding data\n", i, *interleave_ptr);
             interleave_ptr++;
             i += 4;
         }
         else if ((*interleave_ptr & 0xFFFF) == 0x05FF) {
             // Start-code of YUV Data
-//            LOGE("%d(%x) yuv data\n", i, *interleave_ptr);
+            LOGV("%d(%x) yuv data\n", i, *interleave_ptr);
             p = (unsigned char *)interleave_ptr;
             p += 2;
             i += 2;
@@ -1490,7 +1493,7 @@ int CameraHardwareSec::decodeInterleaveData(unsigned char *pInterleaveData,
             }
         } else {
             // Extract JPEG Data
-//            LOGE("%d(%x) jpg data, jpeg_size = %d bytes\n", i, *interleave_ptr, jpeg_size);
+            //LOGV("%d(%x) jpg data, jpeg_size = %d bytes\n", i, *interleave_ptr, jpeg_size);
             if (pJpegData != NULL) {
                 memcpy(jpeg_ptr, interleave_ptr, 4);
                 jpeg_ptr += 4;
