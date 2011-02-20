@@ -848,7 +848,7 @@ int CameraHardwareSec::autoFocusThread()
 #ifdef SWP1_CAMERA_ADD_ADVANCED_FUNCTION
     af_status = mSecCamera->getAutoFocusResult();
 
-    if (af_status == 0x01) {
+    if (af_status == 0x05) {
         LOGV("%s : AF Success!!", __func__);
         if (mMsgEnabled & CAMERA_MSG_FOCUS)
             mNotifyCb(CAMERA_MSG_FOCUS, true, 0, mCallbackCookie);
