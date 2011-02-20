@@ -1063,13 +1063,9 @@ int CameraHardwareSec::pictureThread()
 
     struct addrs_cap *addrs = (struct addrs_cap *)mRawHeap->base();
 
-#ifdef JPEG_FROM_SENSOR
     addrs[0].width = mPostViewWidth;
     addrs[0].height = mPostViewHeight;
     LOGV("[5B] mPostViewWidth = %d mPostViewHeight = %d\n",mPostViewWidth,mPostViewHeight);
-#else
-    mParameters.getPictureSize((int*)&addrs[0].width, (int*)&addrs[0].height);
-#endif
 
     sp<MemoryHeapBase> JpegHeap = new MemoryHeapBase(mJpegHeapSize);
     sp<MemoryHeapBase> PostviewHeap = new MemoryHeapBase(mPostViewSize);
@@ -1084,7 +1080,7 @@ int CameraHardwareSec::pictureThread()
         int picture_format = mSecCamera->getSnapshotPixelFormat();
 
         unsigned int phyAddr;
-#ifdef JPEG_FROM_SENSOR
+
         // Modified the shutter sound timing for Jpeg capture
         if (mSecCamera->getCameraId() == SecCamera::CAMERA_ID_BACK)
             mSecCamera->setSnapshotCmd();
@@ -1110,18 +1106,7 @@ int CameraHardwareSec::pictureThread()
             }
             LOGI("snapshotandjpeg done\n");
         }
-#else
-        phyAddr = mSecCamera->getSnapshotAndJpeg();
-        if (phyAddr < 0) {
-            mStateLock.lock();
-            mCaptureInProgress = false;
-            mStateLock.unlock();
-            return UNKNOWN_ERROR;
-        }
 
-        jpeg_data = mSecCamera->yuv2Jpeg((unsigned char*)phyAddr, 0, &jpeg_size,
-                                        picture_width, picture_height, picture_format);
-#endif
 
 #ifndef DIRECT_DELIVERY_OF_POSTVIEW_DATA
 
@@ -1140,117 +1125,13 @@ int CameraHardwareSec::pictureThread()
     mCaptureInProgress = false;
     mStateLock.unlock();
 
-    int JpegImageSize, JpegExifSize;
-    bool isLSISensor = false;
-
-    if (mSecCamera->getCameraId() == SecCamera::CAMERA_ID_BACK) {
-        isLSISensor = !strncmp((const char*)mCameraSensorName, "S5K4ECGX", 8);
-        if(1) { //FIXME delete death code path
-            LOGI("== Camera Sensor Detect %s - Samsung LSI SOC 5M ==\n", mCameraSensorName);
-            // LSI 5M SOC
-            if (!SplitFrame(jpeg_data, SecCamera::getInterleaveDataSize(),
-                       SecCamera::getJpegLineLength(),
-                       mPostViewWidth * 2, mPostViewWidth,
-                       JpegHeap->base(), &JpegImageSize,
-                       PostviewHeap->base(), &mPostViewSize))
-                return UNKNOWN_ERROR;
-        } else {
-            LOGI("== Camera Sensor Detect %s Sony SOC 5M ==\n", mCameraSensorName);
-            decodeInterleaveData(jpeg_data, SecCamera::getInterleaveDataSize(), mPostViewWidth, mPostViewHeight,
-                                &JpegImageSize, JpegHeap->base(), PostviewHeap->base());
-
-        }
-    } else {
-        JpegImageSize = static_cast<int>(output_size);
-    }
-    scaleDownYuv422((char *)PostviewHeap->base(), mPostViewWidth, mPostViewHeight,
-                    (char *)ThumbnailHeap->base(), mThumbWidth, mThumbHeight);
-
-#ifdef POSTVIEW_CALLBACK
-    sp<MemoryBase> postview = new MemoryBase(PostviewHeap, 0, postviewHeapSize);
-#endif
-    memcpy(mRawHeap->base(),PostviewHeap->base(), postviewHeapSize);
-
-#if defined(BOARD_USES_OVERLAY)
-   /* Put postview image to Overlay */
-    unsigned int index = 0;
-    unsigned int offset = ((mPostViewWidth*mPostViewHeight*3/2) + 16) * index;
-    unsigned int overlay_header[4];
-
-    // Only show postview image if size is VGA since sensor cannot deliver
-    // any other sizes.
-    int previewWidth, previewHeight, previewSize;
-    mSecCamera->getPreviewSize(&previewWidth, &previewHeight, &previewSize);
-    if ((previewWidth != 640) || (previewHeight != 480))
-        goto PostviewOverlayEnd;
-
-    mOverlayBufferIdx ^= 1;
-    overlay_header[0]= mSecCamera->getPhyAddrY(index);
-    overlay_header[1]= overlay_header[0] + mPostViewWidth*mPostViewHeight;
-    overlay_header[2]= mOverlayBufferIdx;
-
-    YUY2toNV21(mRawHeap->base(), (void*)(static_cast<unsigned char *>(mPreviewHeap->base()) + offset),
-                mPostViewWidth, mPostViewHeight);
-
-    memcpy(static_cast<unsigned char*>(mPreviewHeap->base()) + offset + (mPostViewWidth*mPostViewHeight * 3 / 2),
-            overlay_header, 16);
-
-    ret = mOverlay->queueBuffer((void*)(static_cast<unsigned char *>(mPreviewHeap->base()) + offset +
-                                (mPostViewWidth*mPostViewHeight * 3 / 2)));
-
-    if (ret == ALL_BUFFERS_FLUSHED) {
-        goto PostviewOverlayEnd;
-    } else if (ret == -1) {
-        LOGE("ERR(%s):overlay queueBuffer fail", __func__);
-        goto PostviewOverlayEnd;
-    }
-
-    overlay_buffer_t overlay_buffer;
-    ret = mOverlay->dequeueBuffer(&overlay_buffer);
-
-    if (ret == ALL_BUFFERS_FLUSHED) {
-        goto PostviewOverlayEnd;
-    } else if (ret == -1) {
-        LOGE("ERR(%s):overlay dequeueBuffer fail", __func__);
-        goto PostviewOverlayEnd;
-    }
-
-PostviewOverlayEnd:
-#endif
     if (mMsgEnabled & CAMERA_MSG_RAW_IMAGE) {
         mDataCb(CAMERA_MSG_RAW_IMAGE, buffer, mCallbackCookie);
     }
-#ifdef POSTVIEW_CALLBACK
-    if (mMsgEnabled & CAMERA_MSG_POSTVIEW_FRAME) {
-        int postviewHeapSize = mPostViewSize;
-        sp<MemoryHeapBase> mPostviewHeap = new MemoryHeapBase(postviewHeapSize);
 
-        postview_data = jpeg_data + postview_offset;
-        sp<MemoryBase> postview = new MemoryBase(mPostviewHeap, 0, postviewHeapSize);
-
-        if (postview_data != NULL)
-            memcpy(mPostviewHeap->base(), postview_data, postviewHeapSize);
-
-        mDataCb(CAMERA_MSG_POSTVIEW_FRAME, postview, mCallbackCookie);
-    }
-#endif
     if (mMsgEnabled & CAMERA_MSG_COMPRESSED_IMAGE) {
-        sp<MemoryHeapBase> ExifHeap = new MemoryHeapBase(EXIF_FILE_SIZE + JPG_STREAM_BUF_SIZE);
-        JpegExifSize = mSecCamera->getExif((unsigned char *)ExifHeap->base(),
-                (unsigned char *)ThumbnailHeap->base());
-
-        LOGV("JpegExifSize=%d", JpegExifSize);
-
-        if (JpegExifSize < 0) {
-            return UNKNOWN_ERROR;
-        }
-
-        unsigned char *ExifStart = (unsigned char *)JpegHeap->base() + 2;
-        unsigned char *ImageStart = ExifStart + JpegExifSize;
-
-        memmove(ImageStart, ExifStart, JpegImageSize - 2);
-        memcpy(ExifStart, ExifHeap->base(), JpegExifSize);
-        sp<MemoryBase> mem = new MemoryBase(JpegHeap, 0, JpegImageSize + JpegExifSize);
+        memcpy(JpegHeap->base (), jpeg_data, jpeg_size + 2);
+        sp<MemoryBase> mem = new MemoryBase(JpegHeap, 0, jpeg_size);
 
         mDataCb(CAMERA_MSG_COMPRESSED_IMAGE, mem, mCallbackCookie);
     }
