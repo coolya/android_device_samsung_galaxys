@@ -170,6 +170,9 @@ on post-fs
     # allow net_raw to have access to /dev/socket directory
     chown root net_raw /dev/socket
     chmod 0775 /dev/socket
+    
+    #symlinks for samsung RIL
+    symlink /dev/mtd/mtd5ro /dev/block/bml12
 
 # allow system to modify cpufreq control files
     chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor

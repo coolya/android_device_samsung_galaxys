@@ -125,6 +125,8 @@ PRODUCT_PROPERTY_OVERRIDES := \
 PRODUCT_PROPERTY_OVERRIDES += \
        wifi.interface=eth0 \
        wifi.supplicant_scan_interval=20 \
+       ro.telephony.ril_class=samsung \
+       mobiledata.interfaces=pdp0,eth0,gprs,ppp0 \
        dalvik.vm.heapsize=32m
 
 # enable Google-specific location features,
